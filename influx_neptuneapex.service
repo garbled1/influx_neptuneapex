@@ -1,0 +1,10 @@
+[Unit]
+Description=Neptune Apex InfluxDB feeder
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/influx_neptuneapex --host apex
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

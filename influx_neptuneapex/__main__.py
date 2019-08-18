@@ -75,7 +75,10 @@ def parse_apex(jdata):
         o_field = {}
         if output['type'] == 'variable' or output['type'] == 'serial':
             o_field['profile'] = output['status'][0]
-            o_field['value'] = float(output['status'][1])
+            if output['status'][1] == '':
+                o_field['value'] = 0.0
+            else:
+                o_field['value'] = float(output['status'][1])
             o_field['state'] = output['status'][2]
 
         elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs':

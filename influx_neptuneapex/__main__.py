@@ -143,26 +143,30 @@ def main(args=None):
     except:
         print("Cannot find db named {0}, please create".format(args.influx_db))
         return(1)
-    
+
     if args.file is not None:
         with open(args.file) as infile:
             json_data = json.load(infile)
     else:
         url = 'http://' + args.host + '/cgi-bin/status.json'
-        
-        while(True):
-            req = requests.get(url, auth=(args.user, args.password))
-            json_data = req.json()
 
-            influxdata = parse_apex(json_data)
+        while(True):
             try:
-                db_client.write_points(influxdata, time_precision='s')
+                req = requests.get(url, auth=(args.user, args.password))
+                # print(req)
+                json_data = req.json()
+                # print(json_data)
+                influxdata = parse_apex(json_data)
+                try:
+                    db_client.write_points(influxdata, time_precision='s')
+                except Exception as e:
+                    print("Cannot contact influx: {0}".format(str(e)))
+                    exit(1)
             except Exception as e:
-                print("Cannot contact influx: {0}".format(str(e)))
-                exit(1)
+                print("Connection failed on {0} : {1}".format(str(url), str(e)))
+                pass
             time.sleep(args.poll_time)
 
-    
 
 if __name__ == "__main__":
     main()

@@ -152,7 +152,8 @@ def main(args=None):
 
         while(True):
             try:
-                req = requests.get(url, auth=(args.user, args.password))
+                req = requests.get(url, auth=(args.user, args.password),
+                                   timeout=15)
                 # print(req)
                 json_data = req.json()
                 # print(json_data)

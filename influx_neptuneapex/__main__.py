@@ -81,7 +81,7 @@ def parse_apex(jdata):
                 o_field['value'] = float(output['status'][1])
             o_field['state'] = output['status'][2]
 
-        elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs':
+        elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs' or output['type'] == 'dos':
             if 'A' in output['status'][0]:
                 o_field['auto'] = 1
             if 'ON' in output['status'][0]:
@@ -104,7 +104,12 @@ def parse_apex(jdata):
             o_field['flow'] = float(output['status'][6])
             o_field['rpm'] = float(output['status'][4])
             o_field['temp'] = float(output['status'][5])
-            
+
+        # check dos twice because it also has the AON/AOF
+        if output['type'] == 'dos':
+            o_field['dosa'] = float(output['status'][3])
+            o_field['dosb'] = float(output['status'][3])
+
         point = {
             "measurement": "neptune_apex",
             "time": now_sec,
@@ -118,7 +123,9 @@ def parse_apex(jdata):
             },
             "fields" : o_field
         }
+        # print("Got point ", point)
         influx_data_json.append(point)
+    # print(influx_data_json)
     return(influx_data_json)
 
 

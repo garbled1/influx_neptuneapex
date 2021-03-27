@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="influx_neptuneapex",
-    version="1.1",
+    version="1.2",
     description="Feed data from a neptune apex into an InfluxDB",
     license='GPL',
     packages=['influx_neptuneapex'],

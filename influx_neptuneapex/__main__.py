@@ -81,7 +81,7 @@ def parse_apex(jdata):
                 o_field['value'] = float(output['status'][1])
             o_field['state'] = output['status'][2]
 
-        elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs' or output['type'] == 'dos':
+        elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs' or output['type'] == 'dos' or output['type'] == 'selector':
             if 'A' in output['status'][0]:
                 o_field['auto'] = 1
             if 'ON' in output['status'][0]:
@@ -107,8 +107,16 @@ def parse_apex(jdata):
 
         # check dos twice because it also has the AON/AOF
         if output['type'] == 'dos':
-            o_field['dosa'] = float(output['status'][3])
-            o_field['dosb'] = float(output['status'][3])
+            if output['status'][3] != '':
+                o_field['dosa'] = float(output['status'][3])
+            if output['status'][4] != '':
+                o_field['dosb'] = float(output['status'][4])
+
+        if output['type'] == 'selector':
+            if output['status'][1] != '':
+                o_field['tridenta'] = float(output['status'][1])
+            if output['status'][3] != '':
+                o_field['tridentb'] = float(output['status'][3])
 
         point = {
             "measurement": "neptune_apex",

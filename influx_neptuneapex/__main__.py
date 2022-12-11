@@ -81,7 +81,7 @@ def parse_apex(jdata):
                 o_field['value'] = float(output['status'][1])
             o_field['state'] = output['status'][2]
 
-        elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs' or output['type'] == 'dos' or output['type'] == 'selector':
+        elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs' or output['type'] == 'dos' or output['type'] == 'selector' or output['type'] == 'moon' or output['type'] == 'sky':
             if 'A' in output['status'][0]:
                 o_field['auto'] = 1
             if 'ON' in output['status'][0]:

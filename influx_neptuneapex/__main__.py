@@ -73,7 +73,7 @@ def parse_apex(jdata):
     # now the outputs
     for idx,output in enumerate(jdata['istat']['outputs']):
         o_field = {}
-        if output['type'] == 'variable' or output['type'] == 'serial':
+        if output['type'] == 'variable' or output['type'] == 'serial' or output['type'] == 'moon' or output['type'] == 'sky':
             o_field['profile'] = output['status'][0]
             if output['status'][1] == '':
                 o_field['value'] = 0.0
@@ -81,7 +81,7 @@ def parse_apex(jdata):
                 o_field['value'] = float(output['status'][1])
             o_field['state'] = output['status'][2]
 
-        elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs' or output['type'] == 'dos' or output['type'] == 'selector' or output['type'] == 'moon' or output['type'] == 'sky':
+        elif output['type'] == 'alert' or output['type'] == 'outlet' or output['type'] == '24v' or output['type'] == 'virtual' or output['type'] == 'afs' or output['type'] == 'dos' or output['type'] == 'selector':
             if 'A' in output['status'][0]:
                 o_field['auto'] = 1
             if 'ON' in output['status'][0]:
